@@ -1,0 +1,41 @@
+post:
+  summary: apiThree
+  operationId: apiThree
+  tags:
+    - apiThree
+  requestBody:
+    required: true
+    content:
+      application/json; charset=UTF-8:
+        schema:
+          $ref: "#/components/schemas/apiThreeRq"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/apiThreeRs"
+
+components:
+  schemas:
+    apiThreeRq:
+      type: object
+      required:
+        - uuid
+        - paramThreeRq
+      properties:
+        uuid:
+          type: string
+        paramThreeRq:
+          type: string
+
+    apiThreeRs:
+      type: object
+      required:
+        - uuid
+        - paramThreeRs
+      properties:
+        uuid:
+          type: string
+        paramThreeRs:
+          type: string

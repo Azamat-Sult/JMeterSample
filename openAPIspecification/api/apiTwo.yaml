@@ -1,0 +1,41 @@
+post:
+  summary: apiTwo
+  operationId: apiTwo
+  tags:
+    - apiTwo
+  requestBody:
+    required: true
+    content:
+      application/json; charset=UTF-8:
+        schema:
+          $ref: "#/components/schemas/apiTwoRq"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/apiTwoRs"
+
+components:
+  schemas:
+    apiTwoRq:
+      type: object
+      required:
+        - uuid
+        - paramTwoRq
+      properties:
+        uuid:
+          type: string
+        paramTwoRq:
+          type: string
+
+    apiTwoRs:
+      type: object
+      required:
+        - uuid
+        - paramTwoRs
+      properties:
+        uuid:
+          type: string
+        paramTwoRs:
+          type: string

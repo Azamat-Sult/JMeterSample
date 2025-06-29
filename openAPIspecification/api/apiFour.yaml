@@ -1,0 +1,35 @@
+get:
+  summary: apiFour
+  operationId: apiFour
+  tags:
+    - apiFour
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/apiFourRs"
+
+components:
+  schemas:
+    apiFourRs:
+      type: object
+      required:
+        - uuid
+        - paramFourRs
+      properties:
+        uuid:
+          type: string
+        paramFourRs:
+          type: string

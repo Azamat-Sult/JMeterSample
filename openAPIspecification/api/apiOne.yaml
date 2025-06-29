@@ -1,0 +1,41 @@
+post:
+  summary: apiOne
+  operationId: apiOne
+  tags:
+    - apiOne
+  requestBody:
+    required: true
+    content:
+      application/json; charset=UTF-8:
+        schema:
+          $ref: "#/components/schemas/apiOneRq"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/apiOneRs"
+
+components:
+  schemas:
+    apiOneRq:
+      type: object
+      required:
+        - uuid
+        - paramOneRq
+      properties:
+        uuid:
+          type: string
+        paramOneRq:
+          type: string
+
+    apiOneRs:
+      type: object
+      required:
+        - uuid
+        - paramOneRs
+      properties:
+        uuid:
+          type: string
+        paramOneRs:
+          type: string
