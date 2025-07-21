@@ -1,4 +1,4 @@
-get:
+post:
   summary: apiFour
   operationId: apiFour
   tags:
@@ -14,6 +14,12 @@ get:
       required: true
       schema:
         type: string
+    - name: time
+      in: header
+      required: true
+      schema:
+        type: string
+        format: date-time
   responses:
     '200':
       content:

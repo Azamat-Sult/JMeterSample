@@ -17,3 +17,5 @@ paths:
     $ref: "api/apiThree.yaml"
   /four/{id}/{uuid}:
     $ref: "api/apiFour.yaml"
+  /five:
+    $ref: "api/apiFive.yaml"

@@ -16,7 +16,7 @@ public class ThreeController implements ThreeApiDelegate {
 
     @Override
     public ResponseEntity<ApiThreeRs> apiThree(ApiThreeRq apiThreeRq) {
-        log.info("apiThree called");
+        log.info("apiThree called - [uuid: " + apiThreeRq.getUuid() + ", paramThreeRq: " + apiThreeRq.getParamThreeRq() + "]");
         TimeUtils.sleepForRandomSeconds(10);
         return ResponseEntity.ok(new ApiThreeRs(apiThreeRq.getUuid(), apiThreeRq.getParamThreeRq()));
     }

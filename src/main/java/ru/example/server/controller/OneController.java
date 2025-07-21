@@ -16,7 +16,7 @@ public class OneController implements OneApiDelegate {
 
     @Override
     public ResponseEntity<ApiOneRs> apiOne(ApiOneRq apiOneRq) {
-        log.info("apiOne called");
+        log.info("apiOne called - [uuid: " + apiOneRq.getUuid() + ", paramTwoRq: " + apiOneRq.getParamOneRq() + "]");
         TimeUtils.sleepForRandomSeconds(10);
         return ResponseEntity.ok(new ApiOneRs(apiOneRq.getUuid(), apiOneRq.getParamOneRq()));
     }

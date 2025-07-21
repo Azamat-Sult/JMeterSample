@@ -1,0 +1,41 @@
+post:
+  summary: apiFive
+  operationId: apiFive
+  tags:
+    - apiFive
+  requestBody:
+    required: true
+    content:
+      application/json; charset=UTF-8:
+        schema:
+          $ref: "#/components/schemas/apiFiveRq"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/apiFiveRs"
+
+components:
+  schemas:
+    apiFiveRq:
+      type: object
+      required:
+        - uuid
+        - paramFiveRq
+      properties:
+        uuid:
+          type: string
+        paramFiveRq:
+          type: string
+
+    apiFiveRs:
+      type: object
+      required:
+        - uuid
+        - paramFiveRs
+      properties:
+        uuid:
+          type: string
+        paramFiveRs:
+          type: string

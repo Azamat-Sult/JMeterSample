@@ -1,0 +1,958 @@
+{
+  "title": "JMeter",
+  "uid": "JMeter",
+  "version": 1,
+  "refresh": "auto",
+  "panels": [
+    {
+      "title": "Active Threads",
+      "type": "stat",
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum(jmeter_threads{state=\"active\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ]
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "colorMode": "background",
+        "graphMode": "none"
+      }
+    },
+    {
+      "title": "Success Ratio Total",
+      "type": "stat",
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum(irate(jmeter_success_ratio_total[$__interval]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ]
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "colorMode": "background",
+        "graphMode": "none"
+      }
+    },
+    {
+      "title": "Response time",
+      "type": "stat",
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "avg((rate(jmeter_rt_summary_sum{code=\"200\"}[$__interval])/(rate(jmeter_rt_summary_count{code=\"200\"}[$__interval])>0)))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "decimals": 1,
+          "unit": "ms"
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "colorMode": "background",
+        "graphMode": "none"
+      }
+    },
+    {
+      "title": "Avg. Success Ratio Failure vs Total",
+      "type": "stat",
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "(avg(rate(jmeter_success_ratio_failure[$__interval]))/avg(rate(jmeter_success_ratio_total[$__interval])))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "decimals": 1,
+          "unit": "percentunit",
+          "thresholds": {
+            "steps": [
+              {
+                "value": null,
+                "color": "#37872D"
+              },
+              {
+                "value": 0.1,
+                "color": "#FF9830"
+              },
+              {
+                "value": 10,
+                "color": "#E02F44"
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "orientation": "horizontal",
+        "colorMode": "background",
+        "graphMode": "none"
+      }
+    },
+    {
+      "title": "Summary",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "collapsed": false
+    },
+    {
+      "title": "Virtual Users vs OK/KO",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "targets": [
+        {
+          "expr": "sum(jmeter_threads{state=\"active\"})",
+          "legendFormat": "Virtual Users"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_success[$__interval]))",
+          "legendFormat": "Request 200 per second"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_failure[$__interval]))",
+          "legendFormat": "Request failure"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_total[$__interval]))",
+          "legendFormat": "Request total per second"
+        }
+      ]
+    },
+    {
+      "title": "Avg. Response Time vs Virtual Users",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 3
+      },
+      "targets": [
+        {
+          "expr": "avg((rate(jmeter_rt_summary_sum{code=\"200\"}[$__interval])/(rate(jmeter_rt_summary_count{code=\"200\"}[$__interval])>0)))",
+          "legendFormat": "Avg Response Time"
+        },
+        {
+          "expr": "sum(jmeter_threads{state=\"active\"})",
+          "legendFormat": "Virtual Users"
+        }
+      ]
+    },
+    {
+      "title": "Avg. Response Time vs OK/KO",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 11
+      },
+      "targets": [
+        {
+          "expr": "avg((rate(jmeter_rt_summary_sum{code=\"200\"}[$__interval])/(rate(jmeter_rt_summary_count{code=\"200\"}[$__interval])>0)))",
+          "legendFormat": "Avg Response Time"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_success[$__interval]))",
+          "legendFormat": "OK"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_failure[$__interval]))",
+          "legendFormat": "KO"
+        }
+      ]
+    },
+    {
+      "title": "Avg. Response Time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "targets": [
+        {
+          "expr": "avg(rate(jmeter_rt_summary_sum{code=~\"1.*|2.*|3.*|4.*|5.*\"}[$__interval])/(rate(jmeter_rt_summary_count{code=~\"1.*|2.*|3.*|4.*|5.*\"}[$__interval])>0)) by (label)",
+          "legendFormat": "{{label}}"
+        },
+        {
+          "expr": "avg(jmeter_rt_summary{quantile=\"0.95\", code=~\"1.*|2.*|3.*|4.*|5.*\"}) by (label)",
+          "legendFormat": "__auto"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        }
+      }
+    },
+    {
+      "title": "Total Requests by Transactions",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "targets": [
+        {
+          "expr": "(sum(rate(jmeter_success_ratio_success[$__interval]))/sum(rate(jmeter_success_ratio_total[$__interval])))",
+          "legendFormat": "OK || {{label}}"
+        },
+        {
+          "expr": "(sum(rate(jmeter_success_ratio_failure[$__interval]))/sum(rate(jmeter_success_ratio_total[$__interval])))",
+          "legendFormat": "KO || {{label}}"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_total[$__interval])) by (label)",
+          "legendFormat": "Total Requests per second || {{label}}"
+        }
+      ]
+    },
+    {
+      "title": "Total Requests vs OK/KO",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "targets": [
+        {
+          "expr": "(sum(rate(jmeter_success_ratio_success[$__interval]))/sum(rate(jmeter_success_ratio_total[$__interval])))",
+          "legendFormat": "OK"
+        },
+        {
+          "expr": "(sum(rate(jmeter_success_ratio_failure[$__interval]))/sum(rate(jmeter_success_ratio_total[$__interval])))",
+          "legendFormat": "KO"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_total[$__interval]))",
+          "legendFormat": "Total Requests per second"
+        }
+      ]
+    },
+    {
+      "title": "Requests Summary",
+      "type": "piechart",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 27
+      },
+      "targets": [
+        {
+          "expr": "jmeter_success_total",
+          "legendFormat": "PASS - {{label}}"
+        },
+        {
+          "expr": "jmeter_failure_total",
+          "legendFormat": "FAIL - {{label}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ]
+        },
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "percent",
+            "value"
+          ]
+        },
+        "displayLabels": [
+          "percent"
+        ]
+      }
+    },
+    {
+      "title": "Success count",
+      "type": "table",
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 12,
+        "y": 27
+      },
+      "targets": [
+        {
+          "expr": "sum(jmeter_success_ratio_success) by (label)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "label"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 270
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Count"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Errors count",
+      "type": "table",
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 27
+      },
+      "targets": [
+        {
+          "expr": "sum(jmeter_success_ratio_failure) by (label)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": ""
+        }
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "label"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 270
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Count"
+              },
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Pct response times",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "targets": [
+        {
+          "expr": "avg(jmeter_rt_summary{code=\"200\"}) by (quantile)",
+          "legendFormat": "{{quantile}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        }
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ]
+        }
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byValue",
+            "options": {
+              "reducer": "allIsZero",
+              "op": "gte",
+              "value": 0
+            }
+          },
+          "properties": [
+            {
+              "id": "noValue"
+            },
+            {
+              "id": "custom.hideFrom",
+              "value": {
+                "tooltip": true,
+                "viz": false,
+                "legend": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Requests per second",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "collapsed": false
+    },
+    {
+      "title": "Total RPS",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 45
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(jmeter_success_ratio_success[$__interval]))",
+          "legendFormat": "OK"
+        },
+        {
+          "expr": "sum(rate(jmeter_success_ratio_failure[$__interval]))",
+          "legendFormat": "KO"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ]
+        }
+      }
+    },
+    {
+      "title": "RPS by label",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 45
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(jmeter_success_ratio_total[$__interval])) by (label)",
+          "legendFormat": "{{label}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ]
+        }
+      }
+    },
+    {
+      "title": "RPS by HTTP code",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 45
+      },
+      "targets": [
+        {
+          "expr": "sum by (code) (rate(jmeter_success_ratio_total[$__interval]))",
+          "legendFormat": "HTTP {{code}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "showPoints": "never"
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "title": "Errors",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 53
+      },
+      "collapsed": false
+    },
+    {
+      "title": "RPS errors by HTTP code",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 54
+      },
+      "targets": [
+        {
+          "expr": "sum by (code) (rate(jmeter_success_ratio_failure[$__interval]))",
+          "legendFormat": "HTTP {{code}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none",
+          "hideZeros": true
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "showPoints": "never"
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "title": "RPS errors by label",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 54
+      },
+      "targets": [
+        {
+          "expr": "sum by (label) (rate(jmeter_success_ratio_failure[$__interval]))",
+          "legendFormat": "{{label}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none",
+          "hideZeros": true
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "mean",
+            "max",
+            "min"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "lineInterpolation": "linear",
+            "barAlignment": 0,
+            "lineWidth": 1,
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "showPoints": "never"
+          },
+          "unit": "short"
+        }
+      }
+    },
+    {
+      "title": "Test farm",
+      "type": "row",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 63
+      },
+      "collapsed": false
+    },
+    {
+      "title": "GC % time",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "targets": [
+        {
+          "expr": "rate(jvm_gc_collection_seconds_sum[1m])",
+          "legendFormat": "{{gc}}"
+        },
+        {
+          "expr": "rate(jvm_gc_collection_seconds_sum[$__interval]) / ignoring(gc) group_left rate(process_cpu_seconds_total[$__interval])",
+          "legendFormat": "{{gc}} v2"
+        },
+        {
+          "expr": "rate(jvm_gc_collection_seconds_sum[1m]) / rate(jvm_gc_collection_seconds_count[1m])",
+          "legendFormat": "{{gc}} v3"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          },
+          "unit": "percentunit"
+        }
+      }
+    },
+    {
+      "title": "JVM heap - free memory by pool",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 72
+      },
+      "targets": [
+        {
+          "expr": "(jvm_memory_pool_bytes_committed) - (jvm_memory_pool_bytes_used)",
+          "legendFormat": "{{pool}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          },
+          "unit": "decbytes"
+        }
+      }
+    },
+    {
+      "title": "JVM heap - used memory by pool",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 81
+      },
+      "targets": [
+        {
+          "expr": "(jvm_memory_pool_bytes_used)",
+          "legendFormat": "{{pool}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          },
+          "unit": "decbytes"
+        }
+      }
+    },
+    {
+      "title": "JVM free memory",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 89
+      },
+      "targets": [
+        {
+          "expr": "(jvm_memory_bytes_max) - (jvm_memory_bytes_used)",
+          "legendFormat": "{{area}}"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "table",
+          "placement": "right",
+          "calcs": [
+            "mean",
+            "lastNotNull"
+          ]
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          },
+          "unit": "decbytes"
+        }
+      }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  }
+}
