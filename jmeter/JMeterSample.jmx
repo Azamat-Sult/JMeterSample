@@ -6,6 +6,8 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
       <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Prometheus Listener" enabled="true">
@@ -135,7 +137,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="uri_address" elementType="Argument">
             <stringProp name="Argument.name">uri_address</stringProp>
@@ -147,18 +149,18 @@
       <hashTree/>
       <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="STORAGE" enabled="false"/>
       <hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller - Scenario 1">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller - Scenario 1" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller с вероятностью 20%">
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller с вероятностью 20%" enabled="true">
             <stringProp name="IfController.condition">${__groovy(${randomNumb} &lt; 21)}</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
           </IfController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="one">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="one" enabled="true">
               <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
               <stringProp name="HTTPSampler.path">${uri_address}/one</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -179,7 +181,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor paramOneRs">
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor paramOneRs" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
                 <stringProp name="RegexExtractor.refname">paramOneRs</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;paramOneRs&quot;:&quot;(.+?)&quot;</stringProp>
@@ -190,7 +192,7 @@
                 <stringProp name="Sample.scope">all</stringProp>
               </RegexExtractor>
               <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor UUID">
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor UUID" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
                 <stringProp name="RegexExtractor.refname">oneUUID</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;uuid&quot;:&quot;(.+?)&quot;</stringProp>
@@ -202,7 +204,7 @@
               </RegexExtractor>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="two">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="two" enabled="true">
               <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
               <stringProp name="HTTPSampler.path">${uri_address}/two</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -245,21 +247,21 @@
                 <stringProp name="Sample.scope">all</stringProp>
               </RegexExtractor>
               <hashTree/>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor paramTwoRs">
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor paramTwoRs" enabled="true">
                 <stringProp name="JSONPostProcessor.referenceNames">paramTwoRs</stringProp>
                 <stringProp name="JSONPostProcessor.jsonPathExprs">$..paramTwoRs</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
                 <stringProp name="Sample.scope">all</stringProp>
               </JSONPostProcessor>
               <hashTree/>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor UUID">
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor UUID" enabled="true">
                 <stringProp name="JSONPostProcessor.referenceNames">twoUUID</stringProp>
                 <stringProp name="JSONPostProcessor.jsonPathExprs">$..uuid</stringProp>
                 <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
               </JSONPostProcessor>
               <hashTree/>
             </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="three">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="three" enabled="true">
               <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
               <stringProp name="HTTPSampler.path">${uri_address}/three</stringProp>
               <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -281,13 +283,13 @@
             </HTTPSamplerProxy>
             <hashTree/>
           </hashTree>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller с вероятностью 80%">
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller с вероятностью 80%" enabled="true">
             <stringProp name="IfController.condition">${__groovy(${randomNumb} &gt; 20)}</stringProp>
             <boolProp name="IfController.evaluateAll">false</boolProp>
             <boolProp name="IfController.useExpression">true</boolProp>
           </IfController>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="one">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="one" enabled="true">
               <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
               <stringProp name="HTTPSampler.path">${uri_address}/one</stringProp>
               <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -308,7 +310,7 @@
               </elementProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor paramOneRs">
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor paramOneRs" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
                 <stringProp name="RegexExtractor.refname">paramOneRs</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;paramOneRs&quot;:&quot;(.+?)&quot;</stringProp>
@@ -319,7 +321,7 @@
                 <stringProp name="Sample.scope">all</stringProp>
               </RegexExtractor>
               <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor UUID">
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor UUID" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
                 <stringProp name="RegexExtractor.refname">oneUUID</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;uuid&quot;:&quot;(.+?)&quot;</stringProp>
@@ -333,12 +335,12 @@
             </hashTree>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller - Scenario 2">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller - Scenario 2" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="four">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="four" enabled="true">
             <stringProp name="HTTPSampler.contentEncoding">utf8</stringProp>
             <stringProp name="HTTPSampler.path">${uri_address}/four/${csvId}/${csvUuid}</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -386,6 +388,11 @@
             <stringProp name="1508454">1128</stringProp>
             <stringProp name="1567">10</stringProp>
           </collectionProp>
+          <collectionProp name="-1495838912">
+            <stringProp name="1511299">1411</stringProp>
+            <stringProp name="1511299">1411</stringProp>
+            <stringProp name="1567">10</stringProp>
+          </collectionProp>
         </collectionProp>
         <stringProp name="LogFilename"></stringProp>
         <stringProp name="Iterations"></stringProp>
@@ -395,7 +402,7 @@
         <stringProp name="TestPlan.comments">TPM = (170/60) = 2.83, где 170 - количество запусков сценария в час (временно убрал запятые)</stringProp>
       </com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroup>
       <hashTree>
-        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable">
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random Variable" enabled="true">
           <stringProp name="maximumValue">100</stringProp>
           <stringProp name="minimumValue">1</stringProp>
           <stringProp name="outputFormat"></stringProp>
@@ -420,7 +427,7 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller - Scenario 1">
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller - Scenario 1" enabled="true">
           <collectionProp name="ModuleController.node_path">
             <stringProp name="764597751">Test Plan</stringProp>
             <stringProp name="-1347880983">JMeterSample</stringProp>
@@ -429,7 +436,7 @@
           </collectionProp>
         </ModuleController>
         <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report - Scenario 1">
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report - Scenario 1" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -491,6 +498,11 @@
             <stringProp name="1508454">1128</stringProp>
             <stringProp name="1567">10</stringProp>
           </collectionProp>
+          <collectionProp name="-1495838912">
+            <stringProp name="1511299">1411</stringProp>
+            <stringProp name="1511299">1411</stringProp>
+            <stringProp name="1567">10</stringProp>
+          </collectionProp>
         </collectionProp>
         <stringProp name="LogFilename"></stringProp>
         <stringProp name="Iterations"></stringProp>
@@ -500,7 +512,7 @@
         <stringProp name="TestPlan.comments">TPM = (170/60) = 2.83, где 170 - количество запусков сценария в час (временно убрал запятые)</stringProp>
       </com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroup>
       <hashTree>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Content-Type</stringProp>
@@ -513,7 +525,7 @@
           </collectionProp>
         </HeaderManager>
         <hashTree/>
-        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller - Scenario 2">
+        <ModuleController guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller - Scenario 2" enabled="true">
           <collectionProp name="ModuleController.node_path">
             <stringProp name="764597751">Test Plan</stringProp>
             <stringProp name="-1347880983">JMeterSample</stringProp>
@@ -522,7 +534,7 @@
           </collectionProp>
         </ModuleController>
         <hashTree/>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report - Scenario 2">
+        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report - Scenario 2" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -559,7 +571,7 @@
           <stringProp name="filename">Scenario_2_Aggregate_Report.csv</stringProp>
         </ResultCollector>
         <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
+        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
           <stringProp name="delimiter">;</stringProp>
           <stringProp name="fileEncoding">UTF-8</stringProp>
           <stringProp name="filename">C:\Projects\JMeterSample\jmeter\testData.csv</stringProp>
